@@ -6,14 +6,16 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import User from './models/user.js'; 
 import Course from './models/course.js'; 
+import dotenv from 'dotenv';
 
+dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
 
-mongoose.connect('mongodb+srv://santhsim:ramya@cluster0.eiszn14.mongodb.net/')
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error(err));
 
