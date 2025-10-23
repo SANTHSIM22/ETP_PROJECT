@@ -1,0 +1,28 @@
+{
+  "name": "learning_platform",
+  "version": "1.0.0",
+  "description": "Used for teachers and students",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "start": "nodemon src/index.js"
+  },
+  "keywords": [
+    "teachers",
+    "students"
+  ],
+  "author": "Santhsim",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.18.1",
+    "moongoose": "^0.0.5",
+    "path": "^0.12.7"
+  }
+}

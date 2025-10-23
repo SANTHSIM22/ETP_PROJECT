@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+      z-index: 0;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      width: 320px;
+      text-align: center;
+      position: relative;    /* needed for z-index to apply */
+      z-index: 9999;         /* brings it above other panels */
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333333;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 15px;
+      color: #555555;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555555;
+    }
+
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <form action="/login" method="POST">
+    <h1>Student Login</h1>
+    <input type="hidden" name="role" value="student">
+
+    <label>Username:
+      <input type="text" name="username" required>
+    </label>
+
+    <label>Password:
+      <input type="password" name="password" required>
+    </label>
+
+    <button type="submit">Login</button>
+
+    <p>Don't have an account? <a href="/student/signup">Sign up</a></p>
+  </form>
+</body>
+</html>

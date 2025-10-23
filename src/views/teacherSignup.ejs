@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Signup</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      width: 320px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #2e7d32; /* green heading */
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 15px;
+      color: #555555;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50; /* green button */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555555;
+    }
+
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <form action="/signup" method="POST">
+    <h1>Teacher Signup</h1>
+    <input type="hidden" name="role" value="teacher">
+
+    <label>Username:
+      <input type="text" name="username" required>
+    </label>
+
+    <label>Password:
+      <input type="password" name="password" required>
+    </label>
+
+    <button type="submit">Sign Up</button>
+
+    <p>Already have an account? <a href="/teacher/login">Login</a></p>
+  </form>
+</body>
+</html>
+
