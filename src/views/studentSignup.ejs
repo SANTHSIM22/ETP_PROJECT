@@ -3,82 +3,322 @@
 <head>
   <title>Student Signup</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-30px, -30px) rotate(5deg); }
+    }
+
+    /* Navigation */
+    nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2e7d32;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .logo::before {
+      content: '🎓';
+      font-size: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .nav-btn.home {
+      color: #616161;
+      background: transparent;
+    }
+
+    .nav-btn.home:hover {
+      color: #4CAF50;
+    }
+
+    .nav-btn.login {
+      color: #4CAF50;
+      background: transparent;
+      border: 2px solid #4CAF50;
+    }
+
+    .nav-btn.login:hover {
+      background: #4CAF50;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    }
+
+    .nav-btn.signup {
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    }
+
+    .nav-btn.signup:hover {
+      background: linear-gradient(135deg, #45a049 0%, #388e3c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+    }
+
+    body {
+      padding-top: 70px;
     }
 
     form {
       background: #ffffff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      width: 320px;
+      padding: 45px 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+      width: 100%;
+      max-width: 420px;
       text-align: center;
+      position: relative;
+      z-index: 10;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
-      margin-bottom: 20px;
-      color: #2e7d32; /* green heading */
+      margin-bottom: 30px;
+      color: #2e7d32;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
     }
 
     label {
       display: block;
       text-align: left;
-      margin-bottom: 15px;
-      color: #555555;
+      margin-bottom: 20px;
+      color: #424242;
       font-size: 14px;
+      font-weight: 500;
     }
 
     input[type="text"],
     input[type="password"] {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #cccccc;
-      border-radius: 5px;
-      font-size: 14px;
-      box-sizing: border-box;
+      padding: 12px 16px;
+      margin-top: 8px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      background: #fafafa;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: #4CAF50;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
     }
 
     button {
       width: 100%;
-      padding: 10px;
-      background: #4CAF50; /* green button */
+      padding: 14px;
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
       margin-top: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
     }
 
     button:hover {
-      background: #45a049;
+      background: linear-gradient(135deg, #45a049 0%, #388e3c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
     }
 
     p {
-      margin-top: 15px;
+      margin-top: 25px;
       font-size: 14px;
-      color: #555555;
+      color: #616161;
     }
 
     a {
       color: #4CAF50;
       text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
     }
 
     a:hover {
+      color: #45a049;
       text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 0 20px;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .logo::before {
+        font-size: 24px;
+      }
+
+      .nav-links {
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .nav-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+
+      form {
+        width: 90%;
+        max-width: 100%;
+        padding: 30px 25px;
+        margin-top: 80px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      input {
+        padding: 12px 14px;
+        font-size: 14px;
+      }
+
+      button {
+        padding: 12px;
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-container {
+        padding: 0 15px;
+      }
+
+      form {
+        width: 95%;
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      input {
+        padding: 10px 12px;
+        font-size: 14px;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo">EduPlatform</a>
+      <div class="nav-links">
+        <a href="/" class="nav-btn home">Home</a>
+        <a href="/teacher/login" class="nav-btn login">Teacher Login</a>
+        <a href="/student/login" class="nav-btn login">Student Login</a>
+      </div>
+    </div>
+  </nav>
+
   <form action="/signup" method="POST">
     <h1>Student Signup</h1>
     <input type="hidden" name="role" value="student">

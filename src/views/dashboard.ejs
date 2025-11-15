@@ -3,12 +3,90 @@
 <head>
   <title>Student Dashboard</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fa;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+      min-height: 100vh;
       color: #333;
+      padding-top: 65px;
+    }
+
+    /* Navigation */
+    nav.main-nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1001;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2e7d32;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .logo::before {
+      content: '🎓';
+      font-size: 28px;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .user-info {
+      color: #616161;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    .user-info strong {
+      color: #2e7d32;
+    }
+
+    .nav-logout {
+      padding: 8px 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #2e7d32;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #4CAF50;
+      font-size: 14px;
+    }
+
+    .nav-logout:hover {
+      background: #4CAF50;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
     }
 
     /* --- Top Bar --- */
@@ -16,123 +94,864 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #4CAF50;
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
       color: white;
-      padding: 15px 30px;
+      padding: 20px 40px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .top-bar h1 {
       margin: 0;
-      font-size: 22px;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
     }
 
     .top-bar .logout {
-      padding: 8px 15px;
-      background: #e74c3c;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.2);
       color: white;
       text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background 0.2s;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.3);
     }
 
     .top-bar .logout:hover {
-      background: #c0392b;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 
     /* --- Content --- */
     .content {
-      padding: 30px;
+      padding: 40px;
       text-align: center;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .content p {
-      color: #555;
-      margin-top: 5px;
+      color: #616161;
+      margin-top: 8px;
+      font-size: 16px;
+      background: white;
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      font-weight: 500;
     }
 
     h2 {
-      margin-top: 40px;
+      margin-top: 50px;
+      margin-bottom: 30px;
       text-align: center;
+      color: #2e7d32;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
     }
 
     /* --- Course Cards --- */
     .courses-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 25px;
-      justify-content: center;
-      margin-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+      padding: 0 20px;
     }
 
     .course-card {
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       overflow: hidden;
-      width: 280px;              /* increased width */
       text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
     }
 
     .course-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      border-color: #e8f5e9;
     }
 
     .course-card img {
       width: 100%;
-      height: 160px;             /* increased height */
+      height: 200px;
       object-fit: cover;
     }
 
     .course-card h3 {
-      font-size: 18px;
-      margin: 15px 0;
-      color: #333;
-      padding: 0 10px;
+      font-size: 20px;
+      margin: 20px 15px 15px;
+      color: #2e7d32;
+      font-weight: 600;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .course-card a {
       display: inline-block;
       margin-bottom: 20px;
-      padding: 10px 15px;
-      background: #4CAF50;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
       color: white;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 8px;
       font-size: 15px;
-      transition: background 0.2s;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
     }
 
     .course-card a:hover {
+      background: linear-gradient(135deg, #45a049 0%, #388e3c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+    }
+
+    .course-card form {
+      display: inline-block;
+      margin-bottom: 20px;
+      margin-left: 8px;
+    }
+
+    .course-card button {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+
+    .course-card button:hover {
+      background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4);
+    }
+
+    .course-card button.enrolled {
+      background: linear-gradient(135deg, #9E9E9E 0%, #757575 100%);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .course-card button.enrolled:hover {
+      transform: none;
+    }
+
+    /* CHATBOT STYLES */
+    .chatbot-icon {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 65px;
+      height: 65px;
+      background: linear-gradient(135deg, #4CAF50 0%, #2e7d32 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+      }
+      50% {
+        box-shadow: 0 6px 30px rgba(76, 175, 80, 0.6), 0 0 0 8px rgba(76, 175, 80, 0.1);
+      }
+    }
+
+    .chatbot-icon:hover {
+      transform: scale(1.15) rotate(5deg);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+      animation: none;
+    }
+
+    .chatbot-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .chatbot-window {
+      position: fixed;
+      bottom: 110px;
+      right: 30px;
+      width: 380px;
+      height: 550px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+      overflow: hidden;
+      border: 1px solid rgba(76, 175, 80, 0.1);
+      animation: slideInUp 0.4s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .chatbot-window.open {
+      display: flex;
+    }
+
+    .chatbot-header {
+      background: linear-gradient(135deg, #4CAF50 0%, #2e7d32 100%);
+      color: white;
+      padding: 20px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .chatbot-header h3 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chatbot-header h3::before {
+      content: '🤖';
+      font-size: 22px;
+    }
+
+    .chatbot-close {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .chatbot-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: linear-gradient(135deg, #f1f8f4 0%, #e8f5e9 100%);
+    }
+
+    .chatbot-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-thumb {
+      background: #4CAF50;
+      border-radius: 10px;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-thumb:hover {
       background: #45a049;
+    }
+
+    .message {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      animation: messageSlide 0.3s ease-out;
+    }
+
+    @keyframes messageSlide {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message.user {
+      align-items: flex-end;
+    }
+
+    .message.bot {
+      align-items: flex-start;
+    }
+
+    .message-content {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      word-wrap: break-word;
+      font-size: 14px;
+      line-height: 1.5;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .message.user .message-content {
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message.bot .message-content {
+      background: white;
+      color: #333;
+      border: 1px solid #e0e0e0;
+      border-bottom-left-radius: 4px;
+    }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 16px;
+    }
+
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4CAF50;
+      animation: typing 1.4s infinite;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.7;
+      }
+      30% {
+        transform: translateY(-10px);
+        opacity: 1;
+      }
+    }
+
+    .chatbot-input-area {
+      padding: 18px 20px;
+      background: white;
+      border-top: 1px solid #e8f5e9;
+      display: flex;
+      gap: 12px;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .chatbot-input-area input {
+      flex: 1;
+      padding: 12px 18px;
+      border: 2px solid #e0e0e0;
+      border-radius: 25px;
+      outline: none;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background: #fafafa;
+    }
+
+    .chatbot-input-area input:focus {
+      border-color: #4CAF50;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    }
+
+    .chatbot-input-area button {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    }
+
+    .chatbot-input-area button:hover {
+      background: linear-gradient(135deg, #45a049 0%, #388e3c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+    }
+
+    .chatbot-input-area button:active {
+      transform: translateY(0);
+    }
+
+    .chatbot-input-area button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    /* Skeleton loading animation */
+    .skeleton-message {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .skeleton-content {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      background: linear-gradient(90deg, #e8f5e9 25%, #c8e6c9 50%, #e8f5e9 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      height: 65px;
+      width: 70%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    @keyframes skeleton-loading {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding-top: 60px;
+      }
+
+      .nav-container {
+        padding: 0 20px;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .logo::before {
+        font-size: 24px;
+      }
+
+      .nav-right {
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .user-info {
+        font-size: 13px;
+        text-align: right;
+      }
+
+      .nav-logout {
+        padding: 6px 14px;
+        font-size: 13px;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .container h2 {
+        font-size: 22px;
+      }
+
+      .courses {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .enrolled-courses {
+        grid-template-columns: 1fr;
+      }
+
+      .chatbot-icon {
+        width: 55px;
+        height: 55px;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .chatbot-icon svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .chatbot-window {
+        width: calc(100% - 20px);
+        height: 70vh;
+        bottom: 90px;
+        right: 10px;
+        left: 10px;
+        border-radius: 16px;
+      }
+
+      .chatbot-header {
+        padding: 16px 18px;
+      }
+
+      .chatbot-header h3 {
+        font-size: 16px;
+      }
+
+      .chatbot-input-area {
+        padding: 12px 15px;
+      }
+
+      .chatbot-input-area input {
+        font-size: 14px;
+        padding: 10px 14px;
+      }
+
+      .chatbot-input-area button {
+        padding: 10px 18px;
+        font-size: 13px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .container {
+        padding: 30px;
+      }
+
+      .courses {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .enrolled-courses {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .chatbot-window {
+        width: 400px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-container {
+        padding: 0 15px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      .user-info {
+        font-size: 12px;
+        width: 100%;
+        margin-top: 8px;
+      }
+
+      .nav-logout {
+        width: 100%;
+        margin-top: 8px;
+        text-align: center;
+      }
+
+      .top-bar h1 {
+        font-size: 22px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      .container h2 {
+        font-size: 20px;
+      }
+
+      .course-card h3 {
+        font-size: 16px;
+        min-height: auto;
+      }
+
+      .course-card a,
+      .course-card button {
+        padding: 8px 16px;
+        font-size: 13px;
+      }
+
+      .chatbot-window {
+        height: 75vh;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top bar -->
-  <div class="top-bar">
-    <h1>Welcome <%= user.username %> (Student)</h1>
-    <a href="/logout" class="logout">Logout</a>
-  </div>
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="/" class="logo">EduPlatform</a>
+      <div class="nav-right">
+        <span class="user-info">Welcome, <strong><%= user.username %></strong> (Student) | USN: <strong><%= user.usn %></strong></span>
+        <a href="/logout" class="nav-logout">Logout</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- Content -->
   <div class="content">
-    <p>Your USN: <%= user.usn %></p>
+
+  <!-- Content -->
 
     <h2>Available Courses</h2>
-    <div class="courses-container">
+    <div class="courses-container" id="coursesContainer">
       <% courses.forEach(course => { %>
-        <div class="course-card">
+        <div class="course-card" data-course-id="<%= course._id %>">
           <img src="<%= course.image %>" alt="<%= course.title %>">
           <h3><%= course.title %></h3>
           <a href="<%= course.link %>" target="_blank">Go to Course</a>
+          
+          <% 
+            const isEnrolled = user.enrolledCourses && user.enrolledCourses.some(
+              c => c._id.toString() === course._id.toString()
+            );
+          %>
+          
+          <form action="/register-course" method="POST">
+            <input type="hidden" name="courseId" value="<%= course._id %>">
+            <% if (isEnrolled) { %>
+              <button type="button" class="enrolled" disabled>Enrolled</button>
+            <% } else { %>
+              <button type="submit">Register</button>
+            <% } %>
+          </form>
         </div>
       <% }) %>
     </div>
   </div>
+
+  <!-- Chatbot Icon -->
+  <div class="chatbot-icon" id="chatbotIcon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3 .97 4.29L2 22l5.71-.97C9 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.38 0-2.68-.31-3.86-.85l-.28-.13-2.85.48.48-2.85-.13-.28C4.31 14.68 4 13.38 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm-1-6h2v2h-2v-2zm0-6h2v4h-2V8z"/>
+    </svg>
+  </div>
+
+  <!-- Chatbot Window -->
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <h3>AI Assistant</h3>
+      <button class="chatbot-close" id="chatbotClose">&times;</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="message bot">
+        <div class="message-content">
+          Hi! I'm your AI learning assistant. How can I help you today?
+        </div>
+      </div>
+    </div>
+    <div class="chatbot-input-area">
+      <input type="text" id="chatbotInput" placeholder="Type your message...">
+      <button id="chatbotSend">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatbotIcon = document.getElementById('chatbotIcon');
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    const chatbotClose = document.getElementById('chatbotClose');
+    const chatbotMessages = document.getElementById('chatbotMessages');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotSend = document.getElementById('chatbotSend');
+    const coursesContainer = document.getElementById('coursesContainer');
+
+    // Toggle chatbot window
+    chatbotIcon.addEventListener('click', () => {
+      chatbotWindow.classList.toggle('open');
+    });
+
+    chatbotClose.addEventListener('click', () => {
+      chatbotWindow.classList.remove('open');
+    });
+
+    // Highlight recommended courses
+    function filterCourses(recommendedIds) {
+      const allCourses = coursesContainer.querySelectorAll('.course-card');
+      
+      if (!recommendedIds || recommendedIds.length === 0) {
+        // Remove all highlights and reset to default
+        allCourses.forEach(card => {
+          card.style.border = '2px solid transparent';
+          card.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08)';
+          card.style.transform = 'none';
+          card.style.opacity = '1';
+        });
+      } else {
+        // Highlight recommended courses, dim others
+        allCourses.forEach(card => {
+          const courseId = card.getAttribute('data-course-id');
+          if (recommendedIds.includes(courseId)) {
+            card.style.border = '3px solid #4CAF50';
+            card.style.boxShadow = '0 8px 24px rgba(76, 175, 80, 0.4)';
+            card.style.transform = 'scale(1.05)';
+            card.style.opacity = '1';
+          } else {
+            card.style.border = '2px solid transparent';
+            card.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08)';
+            card.style.transform = 'none';
+            card.style.opacity = '0.35';
+          }
+        });
+        
+        // Scroll to courses section
+        coursesContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    // Send message
+    async function sendMessage() {
+      const message = chatbotInput.value.trim();
+      if (!message) return;
+
+      // Add user message to chat
+      const userMessageDiv = document.createElement('div');
+      userMessageDiv.className = 'message user';
+      userMessageDiv.innerHTML = `<div class="message-content">${message}</div>`;
+      chatbotMessages.appendChild(userMessageDiv);
+
+      // Clear input
+      chatbotInput.value = '';
+      chatbotSend.disabled = true;
+
+      // Scroll to bottom
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+      // Add skeleton loading
+      const skeletonDiv = document.createElement('div');
+      skeletonDiv.className = 'skeleton-message';
+      skeletonDiv.id = 'skeleton-loader';
+      skeletonDiv.innerHTML = `<div class="skeleton-content"></div>`;
+      chatbotMessages.appendChild(skeletonDiv);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+      try {
+        // Send to backend
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await response.json();
+
+        // Remove skeleton loading
+        const skeleton = document.getElementById('skeleton-loader');
+        if (skeleton) {
+          skeleton.remove();
+        }
+
+        // Add bot response
+        const botMessageDiv = document.createElement('div');
+        botMessageDiv.className = 'message bot';
+        botMessageDiv.innerHTML = `<div class="message-content">${data.reply || data.error}</div>`;
+        chatbotMessages.appendChild(botMessageDiv);
+        
+        // Highlight courses if recommendations exist
+        if (data.recommendedCourses && data.recommendedCourses.length > 0) {
+          filterCourses(data.recommendedCourses);
+          
+          // Add a message about highlighting
+          const filterMessageDiv = document.createElement('div');
+          filterMessageDiv.className = 'message bot';
+          filterMessageDiv.innerHTML = `<div class="message-content">I've highlighted the recommended courses below. <button onclick="filterCourses([])" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; margin-top: 8px; font-weight: 600; font-size: 13px; box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3); transition: all 0.2s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(76, 175, 80, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(76, 175, 80, 0.3)'">Clear Highlights</button></div>`;
+          chatbotMessages.appendChild(filterMessageDiv);
+        } else {
+          // No recommendations, clear highlights
+          filterCourses([]);
+        }
+
+      } catch (error) {
+        // Remove skeleton loading
+        const skeleton = document.getElementById('skeleton-loader');
+        if (skeleton) {
+          skeleton.remove();
+        }
+
+        // Add error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'message bot';
+        errorDiv.innerHTML = `<div class="message-content">Sorry, I encountered an error. Please make sure Ollama is running.</div>`;
+        chatbotMessages.appendChild(errorDiv);
+      }
+
+      // Scroll to bottom
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      chatbotSend.disabled = false;
+      chatbotInput.focus();
+    }
+
+    chatbotSend.addEventListener('click', sendMessage);
+
+    chatbotInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+    
+    // Make filterCourses globally accessible
+    window.filterCourses = filterCourses;
+  </script>
 
 </body>
 </html>
